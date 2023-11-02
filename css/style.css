@@ -1,5 +1,6 @@
 body {
-  background-color: #f5c9c9;
+      background: rgb(0,0,0);
+      background: radial-gradient(circle, rgba(213,141,141,1) 0%, rgba(26,135,199,1) 47%, rgba(180,33,1,1) 100%);
 }
 
 #canvas{
