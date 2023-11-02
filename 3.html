@@ -1,0 +1,200 @@
+<html>
+<head>
+   <title>1920-і</title>
+   <link rel="icon" href="https://gitknu.github.io/HMB/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+  <link href="https://fonts.googleapis.com/css?family=Caveat&v1" rel="stylesheet">
+<script>
+
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then(() => {
+        const source = audioContext.createBufferSource();
+        source.addEventListener('ended', () => {
+            source.stop();
+            audioContext.close();
+        });
+
+        const request = new XMLHttpRequest();
+
+        request.open('GET', 'audio.mp3', true);
+        request.responseType = 'arraybuffer';
+        request.onload = () => {
+            audioContext.decodeAudioData(
+                request.response,
+                (buffer) => {
+                    source.buffer = buffer;
+                    source.connect(audioContext.destination);
+                    source.start();
+                },
+                (e) => {
+                    console.log('Error with decoding audio data' + e.message);
+                });
+        }
+
+        request.send();
+    })
+    .catch(reason => console.error(`Audio permissions denied: ${reason}`));
+</script> 
+<style>
+ .fog {
+    background-image: url("https://gitknu.github.io/l/fog.gif");
+    background-position: center bottom, left top;
+    -webkit-background-size: 100wv 1vh, cover;
+    -moz-background-size: 100wv 1vh, cover;
+    -o-background-size: 100wv 1vh, cover;
+    background-size: 100wv 1vh, cover;
+    background-repeat: repeat-x, no-repeat;
+   -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    height: 90vh;
+    margin:0;
+    overflow: hidden;
+    background: rgb(0,0,0);
+    background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(26,135,199,1) 47%, rgba(180,33,1,1) 100%);
+}
+
+.thumb {
+    width: 75vw;
+    height: 115vh;
+    margin: 50px auto;
+    perspective: 1000px;
+}
+
+.thumb a {
+    display: block;
+    width: 75%;
+    height: 75%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+		url("Main_page.png");
+    background-size: 0, cover;
+    transform-style: preserve-3d;
+    transition: all 2.6s;
+    animation: rotateAnimation 5.2s infinite alternate;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotateX(0deg);
+    }
+    100% {
+        transform: rotateX(10deg);
+    }
+}
+
+.thumb a:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 36px;
+    background: inherit;
+    background-size: cover, cover;
+    background-position: bottom;
+    transform: rotateX(10deg);
+    transform-origin: bottom;
+}
+
+.thumb a span {
+    color: white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    font: bold 12px/36px "Open Sans";
+    text-align: center;
+    transform: rotateX(-10.99deg);
+    transform-origin: top;
+    z-index: 1;
+}
+
+.thumb a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 100px 50px rgba(0, 0, 0, 0.5);
+    transition: all 2.6s;
+    opacity: 0.15;
+    transform: rotateX(10deg) translateZ(-80px) scale(0.75);
+    transform-origin: bottom;
+}
+
+/* New styles for the button */
+.button {
+    position: absolute;
+    top: 60vh;
+    right: 0vw;
+    transform: translateY(-50%);
+    width: 20vw;
+    height: 100vh;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.button:hover {
+}
+
+.button span {
+    font-size: 7vh;
+    font-weight: bold;
+    opacity: 0.45;
+    transition: opacity 1.5s;
+}
+
+.button:hover span {
+    opacity: 0;
+}
+
+.button:hover::before {
+    content: "СКАНУЙТЕ QR, ВІДКРИВАЙТЕ ПОСИЛАННЯ, СКАНУЙТЕ АГІТПЛАКАТ, ВІДВЕДІТЬ СМАРТФОН";
+    text-align: right;
+    text-shadow: 1px 1px 2px black;
+    position: absolute;
+    top: 30%;
+    right: 2vw;
+    transform: translateY(-50%);
+    font-family: 'Caveat', arial, serif;
+    font-size: 6.5vh;
+    color: #ffdb80;
+}
+
+.resp_img {
+  width: 100%;
+  height: auto;
+}
+
+</style>
+</head>
+<body>
+<div class="fog">
+<div class="thumb">
+	  <a href="#" style="pointer-events: none;"></a>
+</div>
+</div>
+
+<!-- Add the button element -->
+<div class="button">
+    <span><img src="poster.png" class="resp_img"></span>
+</div>
+
+</body>
+</html>
